@@ -1,0 +1,375 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>AUV.Core</name>
+    </assembly>
+    <members>
+        <member name="T:AUV.ApplicationResult">
+            <summary>
+            表示应用程序在执行后的结果。
+            </summary>
+        </member>
+        <member name="M:AUV.ApplicationResult.#ctor(System.Boolean)">
+            <summary>
+            初始化 <see cref="T:AUV.ApplicationResult"/> 类的新实例。
+            </summary>
+            <param name="success">表示应用程序执行的结果是否成功。</param>
+        </member>
+        <member name="M:AUV.ApplicationResult.#ctor(System.String[])">
+            <summary>
+            使用带有错误的字符串数组初始化 <see cref="T:AUV.ApplicationResult"/> 类的新实例。
+            </summary>
+            <param name="errors">可选的错误字符串数组。</param>
+        </member>
+        <member name="M:AUV.ApplicationResult.#ctor(System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            使用带有错误的字符串集合初始化 <see cref="T:AUV.ApplicationResult"/> 类的新实例。
+            </summary>
+            <param name="errors">错误字符串集合。</param>
+        </member>
+        <member name="P:AUV.ApplicationResult.Succeeded">
+            <summary>
+            获取一个布尔值，表示当前的执行是否成功。
+            </summary>
+            <value>
+              若执行成功，则为 <c>true</c>；否则为 <c>false</c>。
+            </value>
+        </member>
+        <member name="P:AUV.ApplicationResult.Errors">
+            <summary>
+            获取一个字符串集合，表示返回的错误信息。
+            </summary>
+            <value>
+            这是一个集合，包含所有的错误信息。
+            </value>
+        </member>
+        <member name="P:AUV.ApplicationResult.Success">
+            <summary>
+            表示当前操作执行成功。
+            </summary>
+        </member>
+        <member name="M:AUV.ApplicationResult.Failed(System.String[])">
+            <summary>
+            表示当前操作执行失败。
+            </summary>
+            <param name="errors">因导致失败的错误字符串数组。</param>
+            <returns>当前的 <see cref="T:AUV.ApplicationResult"/> 实例。</returns>
+        </member>
+        <member name="M:AUV.ApplicationResult.Failed(System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            表示当前操作执行失败。
+            </summary>
+            <param name="errors">因导致失败的错误字符串集合。</param>
+            <returns>当前的 <see cref="T:AUV.ApplicationResult"/> 实例。</returns>
+        </member>
+        <member name="T:AUV.ApplicationResult`1">
+            <summary>
+            表示应用程序在执行后的结果并附带自定义对象。
+            </summary>
+            <typeparam name="T">一个可在结果返回的数据类型。</typeparam>
+            <seealso cref="T:AUV.ApplicationResult" />
+        </member>
+        <member name="M:AUV.ApplicationResult`1.#ctor(`0)">
+            <summary>
+            使用自定义数据初始化 <see cref="T:AUV.ApplicationResult`1"/> 类的新实例。
+            </summary>
+            <param name="data">这是返回的数据。</param>
+        </member>
+        <member name="P:AUV.ApplicationResult`1.Data">
+            <summary>
+            获取一个泛型的值，表示应用程序成功或失败时所需要的任意数据值。
+            </summary>
+            <value>
+            任意数据。
+            </value>
+        </member>
+        <member name="M:AUV.ApplicationResult`1.SetData(`0)">
+            <summary>
+            设置成功或失败时想要在返回时获取的数据。
+            </summary>
+            <param name="data">要设置的数据。</param>
+            <returns><see cref="T:AUV.ApplicationResult`1"/> 实例。</returns>
+        </member>
+        <member name="T:AUV.Cache.CacheExtension">
+            <summary>
+            表示缓存的扩展。
+            </summary>
+        </member>
+        <member name="M:AUV.Cache.CacheExtension.Get``1(AUV.Cache.IObjectCache,System.String)">
+            <summary>
+            获取指定键的缓存对象。
+            </summary>
+            <typeparam name="T">一种数据类型。</typeparam>
+            <param name="cache">派生自 <see cref="T:AUV.Cache.IObjectCache"/> 接口的实例。</param>
+            <param name="key">缓存键。</param>
+            <returns>存储在指定缓存键的缓存对象。</returns>
+            <exception cref="T:System.Collections.Generic.KeyNotFoundException">在缓存字典中无法找到指定的缓存键。</exception>
+            <exception cref="T:System.InvalidCastException">数据类型转换失败</exception>
+        </member>
+        <member name="M:AUV.Cache.CacheExtension.Set``1(AUV.Cache.IObjectCache,System.String,System.Func{``0})">
+            <summary>
+            设置一个拥有唯一键的缓存对象。若指定的键存在，则将指定的对象进行更新；否则将新增一个缓存键和对象。
+            </summary>
+            <param name="cache">派生自 <see cref="T:AUV.Cache.IObjectCache"/> 接口的实例。</param>
+            <param name="key">缓存的键。若该键存在，则更新 value 的值；否则新增一个新缓存字段对象。</param>
+            <param name="predicate">可使用委托的方式进行运算后将结果设置到指定缓存键中。</param>
+        </member>
+        <member name="T:AUV.Cache.InMemoryCache">
+            <summary>
+            表示提供内存作为缓存对象。
+            </summary>
+        </member>
+        <member name="M:AUV.Cache.InMemoryCache.#ctor">
+            <summary>
+            初始化 <see cref="T:AUV.Cache.InMemoryCache"/> 类的新实例。
+            </summary>
+            <remarks>缓存键将不区分大小写。</remarks>
+        </member>
+        <member name="M:AUV.Cache.InMemoryCache.#ctor(System.Collections.Generic.IEqualityComparer{System.String})">
+            <summary>
+            使用自定义的 <see cref="T:System.Collections.Generic.IEqualityComparer`1"/> 实例初始化 <see cref="T:AUV.Cache.InMemoryCache"/> 的新实例。
+            </summary>
+            <param name="comparer">用于区分和比较缓存键的存储方式。</param>
+        </member>
+        <member name="M:AUV.Cache.InMemoryCache.Clear">
+            <summary>
+            清除缓存字典中的所有值。
+            </summary>
+        </member>
+        <member name="M:AUV.Cache.InMemoryCache.Contains(System.String)">
+            <summary>
+            判断指定的缓存键是否存在于缓存字典中。
+            </summary>
+            <param name="key">缓存键。</param>
+            <returns>
+            一个布尔值，<c>true</c> 表示存在缓存字典，否则为 <c>false</c>。
+            </returns>
+        </member>
+        <member name="M:AUV.Cache.InMemoryCache.Get(System.String)">
+            <summary>
+            Gets the specified key.
+            </summary>
+            <param name="key">The key.</param>
+            <returns>
+            存储在指定缓存键的缓存对象。
+            </returns>
+            <exception cref="T:System.Collections.Generic.KeyNotFoundException">在缓存字典中无法找到指定的缓存键。</exception>
+        </member>
+        <member name="M:AUV.Cache.InMemoryCache.Remove(System.String)">
+            <summary>
+            移除缓存字典中的指定缓存键。
+            </summary>
+            <param name="key">缓存键。</param>
+            <exception cref="T:System.Collections.Generic.KeyNotFoundException">在缓存字典中无法找到指定的缓存键。</exception>
+        </member>
+        <member name="M:AUV.Cache.InMemoryCache.Set(System.String,System.Object)">
+            <summary>
+            设置一个拥有唯一键的缓存对象。若指定的键存在，则将指定的对象进行更新；否则将新增一个缓存键和对象。
+            </summary>
+            <param name="key">缓存的键。若该键存在，则更新 value 的值；否则新增一个新缓存字段对象。</param>
+            <param name="value">要存储到该缓存键中的对象。</param>
+        </member>
+        <member name="T:AUV.Cache.IObjectCache">
+            <summary>
+            提供基本的对象缓存服务。
+            </summary>
+        </member>
+        <member name="M:AUV.Cache.IObjectCache.Set(System.String,System.Object)">
+            <summary>
+            设置一个拥有唯一键的缓存对象。若指定的键存在，则将指定的对象进行更新；否则将新增一个缓存键和对象。
+            </summary>
+            <param name="key">缓存的键。若该键存在，则更新 value 的值；否则新增一个新缓存字段对象。</param>
+            <param name="value">要存储到该缓存键中的对象。</param>
+        </member>
+        <member name="M:AUV.Cache.IObjectCache.Get(System.String)">
+            <summary>
+            获取指定键的缓存对象。
+            </summary>
+            <param name="key">缓存键。</param>
+            <returns>存储在指定缓存键的缓存对象。</returns>
+            <exception cref="T:System.Collections.Generic.KeyNotFoundException">在缓存字典中无法找到指定的缓存键。</exception>
+        </member>
+        <member name="M:AUV.Cache.IObjectCache.Contains(System.String)">
+            <summary>
+            判断指定的缓存键是否存在于缓存字典中。
+            </summary>
+            <param name="key">缓存键。</param>
+            <returns>一个布尔值，<c>true</c> 表示存在缓存字典，否则为 <c>false</c>。</returns>
+        </member>
+        <member name="M:AUV.Cache.IObjectCache.Remove(System.String)">
+            <summary>
+            移除缓存字典中的指定缓存键。
+            </summary>
+            <param name="key">缓存键。</param>
+            <exception cref="T:System.Collections.Generic.KeyNotFoundException">在缓存字典中无法找到指定的缓存键。</exception>
+        </member>
+        <member name="M:AUV.Cache.IObjectCache.Clear">
+            <summary>
+            清除缓存字典中的所有值。
+            </summary>
+        </member>
+        <member name="T:AUV.Data.Domain.IAggregateRepository`2">
+            <summary>
+            提供只为聚合根进行仓储操作的功能。
+            </summary>
+            <typeparam name="TAggragete">聚合根类型。</typeparam>
+            <typeparam name="TKey">主键类型。</typeparam>
+        </member>
+        <member name="T:AUV.Data.IAggregateRoot`1">
+            <summary>
+            表示继承该接口的实体是聚合根。
+            </summary>
+            <typeparam name="TKey">聚合根主键类型。</typeparam>
+            <seealso cref="T:AUV.Data.IEntity`1" />
+        </member>
+        <member name="T:AUV.Data.IEntity`1">
+            <summary>
+            表示可以进行仓储操作的实体。
+            </summary>
+            <typeparam name="TKey">实体的唯一标识。</typeparam>
+        </member>
+        <member name="P:AUV.Data.IEntity`1.Id">
+            <summary>
+            获取实体唯一的 Id 值。
+            </summary>
+        </member>
+        <member name="T:AUV.Data.IIdentityEntity">
+            <summary>
+            表示使用 <see cref="T:System.Int32"/> 类型作为实体的主键。
+            </summary>
+            <seealso cref="T:AUV.Data.IEntity`1" />
+        </member>
+        <member name="T:AUV.Data.IUniqueIdentifierEntity">
+            <summary>
+            表示使用 <see cref="T:System.Guid"/> 类型作为实体的主键。
+            </summary>
+            <seealso cref="T:AUV.Data.IEntity`1" />
+        </member>
+        <member name="T:AUV.Data.IIdentityRepository`1">
+            <summary>
+            提供派生自 <see cref="T:AUV.Data.IIdentityEntity" /> 实体的仓储规范。
+            </summary>
+            <typeparam name="TEntity">派生自 <see cref="T:AUV.Data.IIdentityEntity" /> 的实例。</typeparam>
+        </member>
+        <member name="T:AUV.Data.IRepository`2">
+            <summary>
+            提供基本的仓储功能。
+            </summary>
+            <typeparam name="TEntity">派生自 <see cref="T:AUV.Data.IEntity`1"/> 的实例。</typeparam>
+            <typeparam name="TKey">表示实体对象的主键标识。</typeparam>
+        </member>
+        <member name="M:AUV.Data.IRepository`2.Add(`0)">
+            <summary>
+            可以将指定实体添加到当前仓储。
+            </summary>
+            <param name="entity">需要添加的实体。</param>
+        </member>
+        <member name="M:AUV.Data.IRepository`2.Remove(`0)">
+            <summary>
+            可以将指定实体从当前仓储中移除。
+            </summary>
+            <param name="entity">需要移除的实体。</param>
+        </member>
+        <member name="M:AUV.Data.IRepository`2.FindAsync(`1)">
+            <summary>
+            异步从当前仓储中查找指定唯一 Id 的实体。
+            </summary>
+            <param name="id">要查找的实体唯一 Id 值。</param>
+            <returns></returns>
+        </member>
+        <member name="M:AUV.Data.IRepository`2.Query">
+            <summary>
+            表示查询集合的标准。
+            </summary>
+            <returns>可查询的实体对象。</returns>
+        </member>
+        <member name="T:AUV.Data.ISqlCommand">
+            <summary>
+            提供进行自定义 SQL 命令的操作功能。
+            </summary>
+        </member>
+        <member name="M:AUV.Data.ISqlCommand.QueryAsync``1(System.String,System.Object[])">
+            <summary>
+            异步查询指定命令并返回指定类型的集合。
+            </summary>
+            <typeparam name="T">查询结果类型。</typeparam>
+            <param name="commandText">需要执行的命令。</param>
+            <param name="parameters">命令中所包含的参数列表。</param>
+            <returns>查询的结果，必须是一个对象集合。</returns>
+        </member>
+        <member name="M:AUV.Data.ISqlCommand.ExecuteAsync(System.String,System.Object[])">
+            <summary>
+            异步执行指定的命令文本并返回影响行数。
+            </summary>
+            <param name="commandText">命令文本。</param>
+            <param name="parameters">命令中所包含的参数列表。</param>
+            <returns>执行命令后影响的结果。</returns>
+        </member>
+        <member name="T:AUV.Data.IUniqueIdentifierRepository`1">
+            <summary>
+            提供派生自 <see cref="T:AUV.Data.IUniqueIdentifierEntity"/> 实体的仓储规范。
+            </summary>
+            <typeparam name="TEntity">派生自 <see cref="T:AUV.Data.IUniqueIdentifierEntity"/> 基类的实例。</typeparam>
+        </member>
+        <member name="T:AUV.Data.IUnitOfWork">
+            <summary>
+            表示工作单元。
+            </summary>
+            <seealso cref="T:System.IDisposable" />
+        </member>
+        <member name="M:AUV.Data.IUnitOfWork.CompleteAsync">
+            <summary>
+            表示使用异步的方式将当前的工作单元完结。
+            </summary>
+            <exception cref="T:System.InvalidOperationException"></exception>
+        </member>
+        <member name="T:AUV.DisposableHandler">
+            <summary>
+            采用了 Dispose 模式对托管和非托管资源进行优化处理。建议所有需要使用 <see cref="T:System.IDisposable"/> 接口的派生类继承此类，有助于提升性能。
+            查看相关文章 https://msdn.microsoft.com/en-us/library/b1yfkh5e(v=vs.110).aspx 以了解 Dispose 模式。
+            </summary>
+        </member>
+        <member name="M:AUV.DisposableHandler.Finalize">
+            <summary>
+            Finalizes an instance of the <see cref="T:AUV.DisposableHandler"/> class.
+            </summary>
+        </member>
+        <member name="M:AUV.DisposableHandler.Dispose">
+            <summary>
+            执行与释放、释放或重置非托管资源相关的应用程序定义的任务。
+            </summary>
+        </member>
+        <member name="M:AUV.DisposableHandler.Dispose(System.Boolean)">
+            <summary>
+            由子类派生重新定义其执行、释放或重置非托管资源相关的应用程序定义的任务的方式。在没有弄清楚 Dispose 模式之前建议不要重写此方法，以免造成性能的缺失。
+            若想在派生类进行资源的释放和处理，请重写 <see cref="M:AUV.DisposableHandler.DisposeHandler"/> 进行处理。
+            </summary>
+            <param name="disposing"><c>true</c> 时由派生类进行资源释放，否则由析构函数进行资源释放。</param>
+        </member>
+        <member name="M:AUV.DisposableHandler.DisposeHandler">
+            <summary>
+            由派生类执行与释放或重置非托管资源相关的应用程序定义的任务处理。
+            </summary>
+        </member>
+        <member name="P:AUV.DisposableHandler.HasDisposed">
+            <summary>
+            获取一个布尔值，表示资源是否已经被释放。
+            </summary>
+            <value>
+            如果资源已被释放，则为 <c>true</c> ；否则为 <c>false</c>.
+            </value>
+        </member>
+        <member name="T:AUV.Singleton`1">
+            <summary>
+            为指定的实例创建有线程安全的单例模式。实例必须有一个公开的，无参数的构造方法，并且能正确的被实例化。
+            </summary>
+            <remarks>有关单例模式请参见 https://www.codeproject.com/kb/architecture/genericsingletonpattern.aspx </remarks>
+            <typeparam name="T">单例的实例。</typeparam>
+        </member>
+        <member name="M:AUV.Singleton`1.CreateInstance">
+            <summary>
+            为指定对象创建实例。
+            </summary>
+        </member>
+    </members>
+</doc>
