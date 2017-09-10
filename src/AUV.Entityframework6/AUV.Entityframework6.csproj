@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{5F9D88BA-5B96-4876-B88E-7EFF03D1A9AC}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>AUF.Entityframework6</RootNamespace>
+    <RootNamespace>AUV.Entityframework6</RootNamespace>
     <AssemblyName>AUV.Entityframework6</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -53,11 +53,10 @@
     <Compile Include="EntityframeworkIdentityRepository.cs" />
     <Compile Include="EntityframeworkRepository.cs" />
     <Compile Include="EntityframeworkUniqueIdentifierRepository.cs" />
-    <Compile Include="IDbContext.cs" />
     <Compile Include="IEntityframeworkRepository.cs" />
-    <Compile Include="OrderByStyles.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RepositoryExtensions.cs" />
+    <Compile Include="UnitOfWorkExtension.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="AUV.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
