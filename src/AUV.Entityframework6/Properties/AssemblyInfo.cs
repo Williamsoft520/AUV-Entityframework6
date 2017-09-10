@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 // 控制。更改这些特性值可修改
 // 与程序集关联的信息。
 [assembly: AssemblyTitle("AUV.EntityFramework6")]
-[assembly: AssemblyDescription("The repository of entityframework 6 design by AUV.Core for framework 4.5")]
+[assembly: AssemblyDescription("The repository of entityframework 6 design by AUV for framework 4.5")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Williamsoft")]
 [assembly: AssemblyProduct("AUV.EntityFramework6")]
@@ -29,6 +29,6 @@ using System.Runtime.InteropServices;
 //      生成号
 //      修订号
 //
-[assembly: AssemblyVersion("2.5.0")]
-[assembly: AssemblyFileVersion("2.5.1038.6425")]
-[assembly:AssemblyInformationalVersion("2.5.0.37")]
+[assembly: AssemblyVersion("3.0.0")]
+[assembly: AssemblyFileVersion("3.0.1038.6425")]
+[assembly:AssemblyInformationalVersion("3.0.0.1")]

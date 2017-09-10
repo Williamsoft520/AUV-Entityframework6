@@ -17,14 +17,14 @@ namespace AUV.Entityframework6
         : IEntityframeworkRepository<TEntity, TKey>
         where TEntity : class, IEntity<TKey>
     {
-        IDbContext _context;
+        IUnitOfWork _unitOfWork;
         /// <summary>
-        /// 使用 <see cref="IDbContext"/> 实例初始化 <see cref="EntityframeworkRepository{TEntity, TKey}" /> 类的新实例
+        /// 使用 <see cref="IUnitOfWork"/> 实例初始化 <see cref="EntityframeworkRepository{TEntity, TKey}" /> 类的新实例
         /// </summary>
-        /// <param name="context">表示工作单元的最小接口。一定要派生自 <see cref="IDbContext"/> 接口。</param>
-        protected EntityframeworkRepository(IUnitOfWork context)
+        /// <param name="unitOfWork">表示一个工作单元。</param>
+        protected EntityframeworkRepository(IUnitOfWork unitOfWork)
         {
-            _context = context as IDbContext ?? throw new NotSupportedException("请保证指定的 IUnitOfWork 派生自 IDbContext 接口。");
+            _unitOfWork = unitOfWork;
         }
 
         /// <summary>
@@ -35,7 +35,7 @@ namespace AUV.Entityframework6
         /// <summary>
         /// 获取当前仓储的数据集对象。
         /// </summary>
-        internal DbSet<TEntity> Entity => _context.CreateSet<TEntity>();
+        internal DbSet<TEntity> Entity => _unitOfWork.AsDbContext().Set<TEntity>();
 
         /// <summary>
         /// 可以将指定实体添加到当前仓储。

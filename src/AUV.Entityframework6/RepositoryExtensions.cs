@@ -23,14 +23,10 @@ namespace AUV.Entityframework6
         /// <exception cref="System.NotSupportedException">当前使用的查询对象不支持对 DbSet 的转换。</exception>
         public static DbSet<TEntity> GetDbSet<TEntity, TKey>(this IRepository<TEntity, TKey> repository)
             where TEntity : class, IEntity<TKey>
-        {
-            var query = repository.AsEF().Query() as DbSet<TEntity>;
-            if (query == null)
-            {
+
+            => repository.AsEF().Query() as DbSet<TEntity> ??
                 throw new NotSupportedException("当前使用的查询对象不支持对 DbSet 的转换。");
-            }
-            return query;
-        }
+        
 
         /// <summary>
         /// 转换成 <see cref="IEntityframeworkRepository{TEntity, TKey}" /> 实例。
@@ -48,57 +44,23 @@ namespace AUV.Entityframework6
                     where TEntity : class, IEntity<TKey>
         {
             repository = repository ?? throw new ArgumentNullException(nameof(repository));
-
-            var result = repository as IEntityframeworkRepository<TEntity, TKey>;
-            if (result == null)
-            {
-                throw new NotSupportedException("不支持对 IEFRepository 的转换。");
-            }
-            return result;
+            return repository as IEntityframeworkRepository<TEntity, TKey> ?? throw new NotSupportedException("不支持对 IEntityframeworkRepository 的转换。");
         }
 
-        ///// <summary>
-        ///// 使用异步方式获取以指定 Lambda 表达式为排序字段的分页数据。
-        ///// </summary>
-        ///// <typeparam name="TOrderKey">排序字段类型。</typeparam>
-        ///// <param name="repository">仓储的扩展实例。</param>
-        ///// <param name="orderBy">排序字段的 Lambda 表达式。</param>
-        ///// <param name="page">当前页码。</param>
-        ///// <param name="size">每页的数据量。</param>
-        ///// <param name="orderByStyles">排序方式。</param>
-        ///// <typeparam name="TEntity">分页的实体。</typeparam>
-        ///// <typeparam name="TKey">主键类型。</typeparam>
-        ///// <returns>分页集合的实例。</returns>
-        //public static Task<IPagedCollection<TEntity>> FindPagedAsync<TEntity, TKey, TOrderKey>
-        //(this IEntityframeworkRepository<TEntity, TKey> repository,
-        //    Expression<Func<TEntity, TOrderKey>> orderBy, int page, int size, OrderByStyles orderByStyles = OrderByStyles.DESC)
-        //    where TEntity : class, IEntity<TKey>
-        //=>
-        //    Task.Run(() => FindPaged(repository, orderBy, page, size, orderByStyles));
-
-
-        ///// <summary>
-        ///// 获取以指定 Lambda 表达式为排序字段的分页数据。
-        ///// </summary>
-        ///// <typeparam name="TOrderKey">排序字段类型。</typeparam>
-        ///// <param name="repository">仓储的扩展实例。</param>
-        ///// <param name="orderBy">排序字段的 Lambda 表达式。</param>
-        ///// <param name="page">当前页码。</param>
-        ///// <param name="size">每页的数据量。</param>
-        ///// <param name="orderByStyles">排序方式。</param>
-        ///// <typeparam name="TEntity">分页的实体。</typeparam>
-        ///// <typeparam name="TKey">主键类型。</typeparam>
-        ///// <returns>分页集合的实例。</returns>
-        //public static IPagedCollection<TEntity> FindPaged<TEntity, TKey, TOrderKey>
-        //(this IEntityframeworkRepository<TEntity, TKey> repository,
-        //    Expression<Func<TEntity, TOrderKey>> orderBy, int page, int size, OrderByStyles orderByStyles = OrderByStyles.DESC)
-        //where TEntity : class, IEntity<TKey>
-        //=> (
-        //        orderByStyles == OrderByStyles.ASC
-        //        ? repository.GetDbSet().OrderBy(orderBy)
-        //        : repository.GetDbSet().OrderByDescending(orderBy)
-        //        )
-        //    .Paged(page, size);
+        /// <summary>
+        /// 向仓储添加指定的实体集合，在调用 <see cref="IUnitOfWork.CompleteAsync"/> 方法后批量执行。
+        /// </summary>
+        /// <typeparam name="TEntity">实体类型。</typeparam>
+        /// <typeparam name="TKey">主键类型。</typeparam>
+        /// <param name="repository">
+        ///   <see cref="IRepository{TEntity, TKey}" /> 实例。</param>
+        /// <returns>
+        /// 实现了 <see cref="IEntityframeworkRepository{TEntity, TKey}" /> 的实例。
+        /// </returns>
+        /// <param name="entities">要添加的实体集合。</param>
+        public static void AddRange<TEntity, TKey>(this IRepository<TEntity, TKey> repository, IEnumerable<TEntity> entities)
+            where TEntity : class, IEntity<TKey>
+            => repository.AsEF().GetDbSet().AddRange(entities);
 
         /// <summary>
         /// 表示可使用一个带有 Lambda 表达式作为条件的的查询标准。
@@ -113,9 +75,8 @@ namespace AUV.Entityframework6
         /// </returns>
         public static IQueryable<TEntity> Query<TEntity, TKey>(this IRepository<TEntity, TKey> repository, Expression<Func<TEntity, bool>> predicate)
             where TEntity : class, IEntity<TKey>
-        {
-            return repository.Query().Where(predicate);
-        }
+        => repository.Query().Where(predicate);
+        
 
         /// <summary>
         /// 将符合指定 Id 的实体从仓储中移除。在调用工作单元的 <see cref="IUnitOfWork.CompleteAsync" /> 后更新数据库。
@@ -148,12 +109,8 @@ namespace AUV.Entityframework6
         /// <param name="entities">要进行移除的实体集合。</param>
         public static void RemoveRange<TEntity, TKey>(this IRepository<TEntity, TKey> repository, IEnumerable<TEntity> entities)
             where TEntity : class, IEntity<TKey>
-        {
-            foreach (var item in entities)
-            {
-                repository.Remove(item);
-            }
-        }
+        => repository.AsEF().GetDbSet().RemoveRange(entities);
+        
 
 
         /// <summary>
@@ -164,9 +121,14 @@ namespace AUV.Entityframework6
         /// <param name="repository">
         ///   <see cref="IRepository{TEntity, TKey}" /> 扩展实例。</param>
         /// <param name="idCollection">要移除的实体主键集合。若指定的主键实体不存在则不进行移除。</param>
-        public static async Task RemoveRange<TEntity, TKey>(this IRepository<TEntity, TKey> repository, IEnumerable<TKey> idCollection)
+        public static async Task RemoveRange<TEntity, TKey>(this IRepository<TEntity, TKey> repository, params TKey[] idCollection)
                     where TEntity : class, IEntity<TKey>
         {
+            if (idCollection == null)
+            {
+                throw new ArgumentNullException(nameof(idCollection));
+            }
+
             foreach (var item in idCollection)
             {
                 try

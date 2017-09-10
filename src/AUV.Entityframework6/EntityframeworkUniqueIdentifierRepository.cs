@@ -15,10 +15,10 @@ namespace AUV.Entityframework6
         where TEntity : class, IUniqueIdentifierEntity
     {
         /// <summary>
-        /// 使用 <see cref="IDbContext" /> 实例初始化 <see cref="EntityframeworkUniqueIdentifierRepository{TEntity}" /> 类的新实例。
+        /// 使用 <see cref="IUnitOfWork" /> 实例初始化 <see cref="EntityframeworkUniqueIdentifierRepository{TEntity}" /> 类的新实例。
         /// </summary>
         /// <param name="context">可管理 EF 上下文的实例。</param>
-        public EntityframeworkUniqueIdentifierRepository(IDbContext context) : base(context)
+        public EntityframeworkUniqueIdentifierRepository(IUnitOfWork context) : base(context)
         {
         }
     }
