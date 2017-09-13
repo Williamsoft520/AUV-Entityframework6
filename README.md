@@ -6,9 +6,12 @@ AUV 为 entityframework 6.1.3 版本的提供器。
 ## Install from Nuget 从 Nuget 进行安装
 > Install-Package AUV.Entityframework6
 
-## Lastest Version v2.5
+## Lastest Version v3.0
+* [new]add extension of UnitOfWork
+* [remove]some functions
+* [fix]code, bugs
 
-* Support Framework 4.5+
+## V2.5
 * [new]Query predicate argument.
 
         IQuerable<TEntity> query = _repository.Query(m => m.Name == name);
